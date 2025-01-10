@@ -2,9 +2,15 @@ const flowbite = require("flowbite-react/tailwind");
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  mode: "jit",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(to right, #1e3a8a, #3b82f6, #9333ea)",
+      },
+    },
   },
   plugins: [flowbite.plugin()],
 };
