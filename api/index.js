@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
+import { useMiddleware } from "./middleware/error.handler.js";
 
 dotenv.config();
 
@@ -25,3 +26,16 @@ app.listen(3000, () => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+// middleware for error handling
+// app.use((error, request, response, next) => {
+//   const statusCode = error.statusCode || 500; // get error status code and if dont exist 500
+//   const message = error.message || "Server error occured"; // get error message and if dont exist alt message
+//   response.status(statusCode).json({
+//     success: false,
+//     statusCode,
+//     message,
+//   });
+// });
+
+useMiddleware(app);
