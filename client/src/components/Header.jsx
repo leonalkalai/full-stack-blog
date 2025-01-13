@@ -7,37 +7,6 @@ import { IconContext } from "react-icons";
 import Logo from "./Logo";
 import customTheme from "./../customCSS/customTheme";
 
-// const customTheme = {
-//   button: {
-//     color: {
-//       primary:
-//         "bg-white text-black relative z-10 px-1 py-1 relative z-10 rounded-none",
-//     },
-//   },
-//   link: {
-//     base: "flex w-auto h-13 text-4xl items-center justify-center text-black p-1 bg-gradient-to-r from-blue-950 via-blue-700 to-blue-500 transition-all duration-300 rounded-none",
-//     hover:
-//       "hover:bg-gradient-to-r hover:from-blue-950 hover:via-blue-700 hover:to-blue-500 hover:text-white",
-//     active:
-//       "bg-gradient-to-r from-blue-950 via-blue-700 to-blue-500 sm:bg-clip-text sm:text-transparent",
-//     lgactive:
-//       "lg:bg-gradient-to-r lg:from-blue-950 lg:via-blue-700 lg:to-blue-500 lg:bg-clip-text lg:text-transparent",
-//     activeHamburger: "text-gray-700 bg-transparent",
-//   },
-//   collapse: {
-//     base: "w-full md:block md:w-auto",
-//     list: "mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium bg-gradient-to-r from-blue-950 via-blue-700 to-blue-500",
-//     hidden: {
-//       on: "hidden",
-//       off: "",
-//     },
-//   },
-//   toggle: {
-//     base: "bg-gradient-to-r from-blue-950 via-blue-700 to-blue-500",
-//     icon: "h-6 w-6 shrink-0",
-//   },
-// };
-
 export default function Header() {
   const path = useLocation().pathname; // get path
   return (
@@ -92,7 +61,7 @@ export default function Header() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link
-          className={`${
+          className={`text-base ${customTheme.link.hoverLinkParent} ${
             path === "/"
               ? customTheme.link.active
               : customTheme.link.activeHamburger
@@ -101,7 +70,7 @@ export default function Header() {
           as={"div"}
         >
           <Link
-            className={`${
+            className={`${customTheme.link.hoverLinkChild} ${
               path === "/"
                 ? customTheme.link.lgactive
                 : customTheme.link.activeHamburger
@@ -112,7 +81,7 @@ export default function Header() {
           </Link>
         </Navbar.Link>
         <Navbar.Link
-          className={`${
+          className={`text-base ${customTheme.link.hoverLinkParent} ${
             path === "/about"
               ? customTheme.link.active
               : customTheme.link.activeHamburger
@@ -121,7 +90,7 @@ export default function Header() {
           as={"div"}
         >
           <Link
-            className={`${
+            className={`${customTheme.link.hoverLinkChild} ${
               path === "/about"
                 ? customTheme.link.lgactive
                 : customTheme.link.activeHamburger
@@ -132,7 +101,7 @@ export default function Header() {
           </Link>
         </Navbar.Link>
         <Navbar.Link
-          className={`${
+          className={`text-base ${customTheme.link.hoverLinkParent}  ${
             path === "/projects"
               ? customTheme.link.active
               : customTheme.link.activeHamburger
@@ -141,7 +110,7 @@ export default function Header() {
           as={"div"}
         >
           <Link
-            className={`${
+            className={`${customTheme.link.hoverLinkChild} ${
               path === "/projects"
                 ? customTheme.link.lgactive
                 : customTheme.link.activeHamburger

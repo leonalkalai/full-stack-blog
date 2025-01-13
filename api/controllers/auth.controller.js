@@ -16,7 +16,7 @@ export const signup = async (request, response, next) => {
   }
 
   // hash the password
-  const hashedPassword = bcryptjs.hashSync(password, 10); // hashSync method includes await, 10 rounds of salt [A salt is a piece of random data added to a password before it is hashed and stored.]
+  const hashedPassword = bcryptjs.hashSync(password || "", 10); // hashSync method includes await, 10 rounds of salt [A salt is a piece of random data added to a password before it is hashed and stored.]
   // const newUser = new User({
   //   username: username,
   //   email: email,
@@ -32,7 +32,7 @@ export const signup = async (request, response, next) => {
 
   try {
     await newUser.save(); // saver user
-    response.json({ message: "new user added" });
+    response.json("Signup successful");
   } catch (error) {
     next(error); // use middlware
     // response.status(500).json({ message: error.message });
