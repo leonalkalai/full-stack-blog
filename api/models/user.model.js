@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       required: true, // error username not typed
     },
   },
-  { timestaps: true } // set timestamps to update user information
+  { timestamps: true } // set timestamps to update user information
 );
 
 const User = mongoose.model("User", userSchema);
