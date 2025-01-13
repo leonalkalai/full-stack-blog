@@ -11,23 +11,39 @@ import {
 import customTheme from "./../customCSS/customTheme";
 import { Link, useNavigate } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux"; // import useDispatch to use the reducer functions and useSelector to select the error and loading from redux
+// import reducer functions
+import {
+  defaultSignIn,
+  successSignIn,
+  failSignIn,
+} from "../redux/user/userSlice";
+
 export default function SignIn() {
   const [formValues, setFormValues] = useState({}); // set initial form data to empty object
-  const [errorMessage, setErrorMessage] = useState(null); // set initial state for errors
-  const [loading, setLoading] = useState(false); // set initial state for loading
+  //const [errorMessage, setErrorMessage] = useState(null); // set initial state for errors
+  //const [loading, setLoading] = useState(false); // set initial state for loading
+  const { loading, error: errorMessage } = useSelector((state) => state.user); // select loading and errorMessage from reducer error
+  const dispatch = useDispatch(); // use the dispatcher to dispatch the reducers
   const navigate = useNavigate(); // use navigation feature
 
   // create method to drop error message
   const handleErrorMessage = async (formValues) => {
     const { email, password } = formValues;
     if ([email, password].some((value) => value === "" || !value)) {
-      return setErrorMessage("please fill all the required fields.");
+      //return setErrorMessage("please fill all the required fields.");
+      return dispatch(failSignIn("please fill all the required fields.")); // user dispatch to get the error from the reducer
     }
   };
 
   const handleDublicateErrorMessage = async (data) => {
     if (data.success === false) {
-      return setErrorMessage(data.message);
+      /* instead of 
+          return setErrorMessage(data.message);
+        use
+         dispatch(failSignIn(data.message)); 
+      */
+      return dispatch(failSignIn(data.message));
     }
   };
 
@@ -47,8 +63,13 @@ export default function SignIn() {
     const signInURL = "/api/auth/signin";
     await handleErrorMessage(formValues);
     try {
-      setLoading(true); // loading on submit
-      setErrorMessage(null); // reset error messages
+      /* instead of 
+        setLoading(true); // loading on submit
+        setErrorMessage(null); // reset error messages
+      use 
+        dispatch(defaultSignIn());
+      */
+      dispatch(defaultSignIn());
       const response = await fetch(`${signInURL}`, {
         method: "POST", // method of post form data
         headers: { "Content-Type": "application/json" }, // content json form
@@ -58,13 +79,14 @@ export default function SignIn() {
       const data = await response.json(); // get the form data
       //console.log(data);
       await handleDublicateErrorMessage(data); // drop error if user exists
-      setLoading(false); // stop loading after successful submit
+      // setLoading(false); // stop loading after successful submit
       if (response.ok) {
+        dispatch(successSignIn(data)); // dispatch success if using redux
         navigate("/"); // navigate to home if sign in ok
       }
     } catch (error) {
-      // setErrorMessage(error.message); // client error ex no internet
-      setLoading(false); // stop loading after successful submit
+      dispatch(failSignIn(error.message)); // dispatch error if using redux
+      // setErrorMessage(error.message); // client error if no internet
     }
   };
 

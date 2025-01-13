@@ -63,7 +63,7 @@ export default function SignUp() {
         navigate("/sign-in"); // navigate to sign-in if response is ok
       }
     } catch (error) {
-      // setErrorMessage(error.message); // client error ex no internet
+      // setErrorMessage(error.message); // client error if no internet
       setLoading(false); // stop loading after successful submit
     }
   };
